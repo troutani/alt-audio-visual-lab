@@ -1515,21 +1515,7 @@ footer::before{
   transition:width .12s linear;
 }
 
-/* === B. サイドの縦長"フィルムストリップ" === */
-.alt-film-strip{
-  position:fixed;top:0;bottom:0;width:24px;z-index:5;pointer-events:none;
-  display:flex;flex-direction:column;justify-content:space-around;align-items:center;
-  background:rgba(0,0,0,.25);
-  border-right:1px solid var(--line-soft);
-  opacity:.0;
-  animation:altFilmIn 1s 6.5s ease-out forwards;
-}
-.alt-film-strip.right{left:auto;right:0;border-right:none;border-left:1px solid var(--line-soft)}
-.alt-film-strip span{
-  width:8px;height:8px;border-radius:1px;background:var(--gold);opacity:.25;
-}
-@keyframes altFilmIn{from{opacity:0}to{opacity:.5}}
-@media (max-width:1080px){.alt-film-strip{display:none}}
+/* === B. サイドの縦長"フィルムストリップ" — 削除済み === */
 
 /* === C. 章番号フローティングナンバリング === */
 .alt-chapter-num{
@@ -1812,34 +1798,7 @@ html{scrollbar-color:var(--gold) rgba(10,10,12,.6);scrollbar-width:thin}
 }
 .alt-word.is-in{opacity:1;transform:none}
 
-/* === Y. EQ風デコレーションバー（左右に） === */
-.alt-eq{
-  position:fixed;left:30px;top:50%;transform:translateY(-50%);
-  display:flex;flex-direction:column;gap:3px;z-index:5;
-  pointer-events:none;opacity:0;animation:altFrameIn 1s 7.0s ease-out forwards;
-}
-.alt-eq.right{left:auto;right:30px}
-.alt-eq span{
-  display:block;width:14px;height:2px;background:var(--gold);opacity:.45;border-radius:1px;
-  animation:altEqPulse 2.4s ease-in-out infinite;
-}
-.alt-eq span:nth-child(1){animation-delay:0s;width:8px}
-.alt-eq span:nth-child(2){animation-delay:.15s;width:14px}
-.alt-eq span:nth-child(3){animation-delay:.3s;width:10px}
-.alt-eq span:nth-child(4){animation-delay:.45s;width:18px}
-.alt-eq span:nth-child(5){animation-delay:.6s;width:12px}
-.alt-eq span:nth-child(6){animation-delay:.75s;width:16px}
-.alt-eq span:nth-child(7){animation-delay:.9s;width:6px}
-.alt-eq span:nth-child(8){animation-delay:1.05s;width:14px}
-.alt-eq span:nth-child(9){animation-delay:1.2s;width:10px}
-.alt-eq span:nth-child(10){animation-delay:1.35s;width:18px}
-.alt-eq span:nth-child(11){animation-delay:1.5s;width:8px}
-.alt-eq span:nth-child(12){animation-delay:1.65s;width:12px}
-@keyframes altEqPulse{
-  0%,100%{opacity:.25;transform:scaleX(.6)}
-  50%{opacity:1;transform:scaleX(1.2)}
-}
-@media (max-width:1080px){.alt-eq{display:none}}
+/* === Y. EQ風デコレーションバー — 削除済み === */
 
 /* === Z. 巨大なROMA数字を背景にトップヒーロー === */
 .hero::after{z-index:3} /* 既存 letterbox */
@@ -1977,6 +1936,14 @@ html{scrollbar-color:var(--gold) rgba(10,10,12,.6);scrollbar-width:thin}
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
   .alt-aurora,body::before,footer::before{animation:none !important}
 }
+
+/* === ⚑ FORCED HIDE — 念のため非表示の保険 === */
+.alt-film-strip,
+.alt-eq,
+.alt-frame,
+.alt-vertical-text,
+.alt-signature,
+.alt-scroll-bar{display:none !important}
 </style>
 </head>
 <body>
@@ -2013,17 +1980,6 @@ html{scrollbar-color:var(--gold) rgba(10,10,12,.6);scrollbar-width:thin}
   <span class="alt-corner-bl"></span>
 </div>
 
-<!-- ✦ Scroll progress bar ✦ -->
-<div class="alt-scroll-bar" aria-hidden="true"></div>
-
-<!-- ✦ Side film strips ✦ -->
-<aside class="alt-film-strip" aria-hidden="true">
-  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-</aside>
-<aside class="alt-film-strip right" aria-hidden="true">
-  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-</aside>
-
 <!-- ✦ Studio signature (bottom right) ✦ -->
 <div class="alt-signature" aria-hidden="true">
   <span class="alt-sig-id">STUDIO ID — A · L · T</span>
@@ -2036,14 +1992,6 @@ html{scrollbar-color:var(--gold) rgba(10,10,12,.6);scrollbar-width:thin}
 
 <!-- ✦ Phase 3 — Constant film grain overlay ✦ -->
 <div class="alt-grain-overlay" aria-hidden="true"></div>
-
-<!-- ✦ Phase 3 — EQ decoration bars ✦ -->
-<aside class="alt-eq" aria-hidden="true">
-  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-</aside>
-<aside class="alt-eq right" aria-hidden="true">
-  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-</aside>
 
 <!-- ✦ Phase 3 — Vertical decorative text ✦ -->
 <div class="alt-vertical-text" aria-hidden="true">ALT — RE:IMAGINE THE CLASSICS · 2026</div>
@@ -4531,6 +4479,46 @@ updateScrollUI();
   // Tap-to-stop on the bar itself
   bar.addEventListener('click', (e)=>{
     if(active){ stopRound(); e.stopPropagation(); }
+  });
+})();
+</script>
+
+<!-- ========== CDN VIDEO CONFIGURATION ========== -->
+<script>
+// CDN Configuration for video hosting
+// To use external CDN, set cdnHost to your CDN domain, e.g. https://videos.cdn.example.com
+(function(){
+  const cdnHost = null; // Set this to your CDN URL when ready
+
+  if(!cdnHost) return; // Skip if not configured
+
+  // Map local paths to CDN paths
+  const videoMapping = {
+    'assets/collections/ukiyoe/video.mp4': 'ukiyoe.mp4',
+    'assets/collections/hanafuda/video.mp4': 'hanafuda.mp4',
+    'assets/collections/chinjuu/video.mp4': 'chinjuu.mp4',
+    'assets/collections/edo/video.mp4': 'edo.mp4',
+    'assets/collections/aquarium/video.mp4': 'aquarium.mp4',
+    'assets/collections/sasuke/video.mp4': 'sasuke.mp4',
+    'assets/shorts/toy-story/video.mp4': 'toy-story.mp4',
+    'assets/shorts/sprid-away/video.mp4': 'sprid-away.mp4',
+    'assets/shorts/pokemon/video.mp4': 'pokemon.mp4',
+    'assets/shorts/eva/video.mp4': 'eva.mp4',
+    'assets/shorts/dragonball/video.mp4': 'dragonball.mp4',
+    'assets/shorts/naruto/video.mp4': 'naruto.mp4',
+    'assets/shorts/kimetsu/video.mp4': 'kimetsu.mp4',
+    'assets/shorts/jujutsu/video.mp4': 'jujutsu.mp4',
+    'assets/shorts/doraemon/video.mp4': 'doraemon.mp4',
+    'assets/shorts/elmo/video.mp4': 'elmo.mp4'
+  };
+
+  // Rewrite video sources to use CDN
+  document.querySelectorAll('video source').forEach(source => {
+    const localPath = source.getAttribute('src');
+    if(videoMapping[localPath]){
+      const cdnUrl = cdnHost + '/videos/' + videoMapping[localPath];
+      source.setAttribute('src', cdnUrl);
+    }
   });
 })();
 </script>
