@@ -4486,39 +4486,18 @@ updateScrollUI();
 <!-- ========== CDN VIDEO CONFIGURATION ========== -->
 <script>
 // CDN Configuration for video hosting
-// To use external CDN, set cdnHost to your CDN domain, e.g. https://videos.cdn.example.com
 (function(){
-  const cdnHost = null; // Set this to your CDN URL when ready
+  const cdnHost = 'https://alt-videos.b-cdn.net';
 
-  if(!cdnHost) return; // Skip if not configured
-
-  // Map local paths to CDN paths
-  const videoMapping = {
-    'assets/collections/ukiyoe/video.mp4': 'ukiyoe.mp4',
-    'assets/collections/hanafuda/video.mp4': 'hanafuda.mp4',
-    'assets/collections/chinjuu/video.mp4': 'chinjuu.mp4',
-    'assets/collections/edo/video.mp4': 'edo.mp4',
-    'assets/collections/aquarium/video.mp4': 'aquarium.mp4',
-    'assets/collections/sasuke/video.mp4': 'sasuke.mp4',
-    'assets/shorts/toy-story/video.mp4': 'toy-story.mp4',
-    'assets/shorts/sprid-away/video.mp4': 'sprid-away.mp4',
-    'assets/shorts/pokemon/video.mp4': 'pokemon.mp4',
-    'assets/shorts/eva/video.mp4': 'eva.mp4',
-    'assets/shorts/dragonball/video.mp4': 'dragonball.mp4',
-    'assets/shorts/naruto/video.mp4': 'naruto.mp4',
-    'assets/shorts/kimetsu/video.mp4': 'kimetsu.mp4',
-    'assets/shorts/jujutsu/video.mp4': 'jujutsu.mp4',
-    'assets/shorts/doraemon/video.mp4': 'doraemon.mp4',
-    'assets/shorts/elmo/video.mp4': 'elmo.mp4'
-  };
+  if(!cdnHost) return;
 
   // Rewrite video sources to use CDN
   document.querySelectorAll('video source').forEach(source => {
     const localPath = source.getAttribute('src');
-    if(videoMapping[localPath]){
-      const cdnUrl = cdnHost + '/videos/' + videoMapping[localPath];
-      source.setAttribute('src', cdnUrl);
-    }
+    // Convert: assets/collections/... → collections/...
+    const cdnPath = localPath.replace('assets/', '');
+    const cdnUrl = cdnHost + '/' + cdnPath;
+    source.setAttribute('src', cdnUrl);
   });
 })();
 </script>
